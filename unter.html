@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tasbeeh Counter</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#0f172a;
+      color:white;
+    }
+
+    .container{
+      width:330px;
+      background:#1e293b;
+      padding:25px;
+      border-radius:20px;
+      text-align:center;
+      box-shadow:0 0 20px rgba(0,0,0,0.4);
+    }
+
+    h1{
+      margin-bottom:20px;
+    }
+
+    .zikr{
+      font-size:28px;
+      margin-bottom:15px;
+      color:#22c55e;
+      font-weight:bold;
+    }
+
+    .count{
+      font-size:55px;
+      margin-bottom:20px;
+      font-weight:bold;
+    }
+
+    .tap-btn{
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      border:none;
+      background:#22c55e;
+      color:white;
+      font-size:28px;
+      cursor:pointer;
+      transition:0.15s;
+      box-shadow:0 0 15px rgba(34,197,94,0.5);
+    }
+
+    .tap-btn:active{
+      transform:scale(0.92);
+    }
+
+    .reset{
+      margin-top:20px;
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:#ef4444;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Tasbeeh Counter</h1>
+
+    <div class="zikr" id="zikr">
+      SubhanAllah
+    </div>
+
+    <div class="count" id="count">
+      0
+    </div>
+
+    <button class="tap-btn" onclick="tapCount()">
+      TAP
+    </button>
+
+    <button class="reset" onclick="resetCounter()">
+      Reset
+    </button>
+
+    <!-- Sound -->
+    <audio id="sound">
+      <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg">
+    </audio>
+
+  </div>
+
+  <script>
+
+    let count = 0;
+
+    const countText = document.getElementById("count");
+    const zikrText = document.getElementById("zikr");
+    const sound = document.getElementById("sound");
+
+    function tapCount(){
+
+      count++;
+
+      sound.currentTime = 0;
+      sound.play();
+
+      // First 33
+      if(count <= 33){
+        zikrText.innerText = "SubhanAllah";
+        countText.innerText = count + " / 33";
+      }
+
+      // Next 33
+      else if(count <= 66){
+        zikrText.innerText = "Alhamdulillah";
+        countText.innerText = (count - 33) + " / 33";
+      }
+
+      // Last 34
+      else if(count <= 100){
+        zikrText.innerText = "Allahu Akbar";
+        countText.innerText = (count - 66) + " / 34";
+      }
+
+      // Completed
+      else{
+        zikrText.innerText = "Tasbeeh Completed ✅";
+        countText.innerText = "100";
+      }
+
+    }
+
+    function resetCounter(){
+
+      count = 0;
+
+      zikrText.innerText = "SubhanAllah";
+      countText.innerText = "0";
+
+    }
+
+  </script>
+
+</body>
+</html>
